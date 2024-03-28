@@ -1,0 +1,29 @@
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+}
+.page-numbers {
+  margin-top: 5em;
+  display: flex;
+  gap: 2px;
+  justify-content: center;
+  list-style: none;
+  padding: 1em;
+}
+.active {
+  text-decoration: none;
+  color: black;
+  padding: 0.5em;
+  border-radius: 5px;
+  background-color: #f0f0f5;
+}
+.inactive {
+  text-decoration: none;
+  color: black;
+  padding: 0.5em;
+  border-radius: 5px;
+}
+.inactive:hover {
+  background-color: gainsboro;
+}

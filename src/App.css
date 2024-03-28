@@ -1,0 +1,24 @@
+main {
+  background-color: #f0f0f5;
+  padding: 5rem;
+}
+.main-container {
+  padding: 5rem;
+  background-color: white;
+}
+.filter-container {
+  width: 90%;
+  margin: 0 auto;
+}
+.filter-container input {
+  width: 100%;
+  border: none;
+  padding: 1.5rem 5rem;
+  font-size: 1.1em;
+  background-color: #f0f0f5;
+}
+.icon {
+  background: url("./assets/maginfier.svg") no-repeat left;
+  background-size: 30px;
+  background-position: 1em 1em;
+}
