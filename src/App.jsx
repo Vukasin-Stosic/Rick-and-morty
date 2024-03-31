@@ -5,54 +5,68 @@ import "./App.css";
 
 function App() {
   const [characters, setCharacters] = useState([]);
+  const [pages, setPages] = useState([]);
   const [curentPage, setCurentPage] = useState(1);
-  const totalPages = 42;
+  const totalPages = pages.pages;
 
   useEffect(() => {
     fetch("https://rickandmortyapi.com/api/character")
       .then((res) => res.json())
       .then((data) => {
         setCharacters(data.results);
+        setPages(data.info);
       });
   }, []);
 
   const handleChange = (event) => {
     const name = event.target.value;
+
     fetch(`https://rickandmortyapi.com/api/character?name=${name}`)
       .then((res) => res.json())
       .then((data) => {
-        setCharacters(data.results);
+        setCharacters(data.results || []);
       });
   };
 
   const onPageChange = (event) => {
     let pageNumber = event.target.textContent;
-    console.log(pageNumber);
+
     fetch(`https://rickandmortyapi.com/api/character/?page=${pageNumber}`)
       .then((res) => res.json())
       .then((data) => {
         setCharacters(data.results);
       });
-    setCurentPage(pageNumber);
+    if (pageNumber == "Go to first page") {
+      setCurentPage(1);
+    } else if (pageNumber == "Go to last page") {
+      fetch(`https://rickandmortyapi.com/api/character/?page=${totalPages}`)
+        .then((res) => res.json())
+        .then((data) => {
+          setCharacters(data.results);
+        });
+      setCurentPage(totalPages);
+    } else {
+      setCurentPage(pageNumber);
+    }
   };
 
-  const goToFirstPage = () => {
-    fetch("https://rickandmortyapi.com/api/character/?page=1")
-      .then((res) => res.json())
-      .then((data) => {
-        setCharacters(data.results);
-      });
-    setCurentPage(1);
-  };
+  // const goToFirstPage = () => {
+  //   fetch("https://rickandmortyapi.com/api/character/?page=1")
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       setCharacters(data.results);
+  //     });
+  //   setCurentPage(1);
+  // };
 
-  const goTolastPage = () => {
-    fetch("https://rickandmortyapi.com/api/character/?page=42")
-      .then((res) => res.json())
-      .then((data) => {
-        setCharacters(data.results);
-      });
-    setCurentPage(42);
-  };
+  // const goTolastPage = () => {
+  //   fetch(`https://rickandmortyapi.com/api/character/?page=${totalPages}`)
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       setCharacters(data.results);
+  //     });
+  //   setCurentPage(totalPages);
+  // };
 
   return (
     <main>
@@ -68,8 +82,8 @@ function App() {
         <CharacterList characters={characters} />
         <PageNumbers
           onPageChange={onPageChange}
-          goToFirstPage={goToFirstPage}
-          goTolastPage={goTolastPage}
+          // goToFirstPage={goToFirstPage}
+          // goTolastPage={goTolastPage}
           currentPage={curentPage}
           totalPages={totalPages}
           displayRange={5}
